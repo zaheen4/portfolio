@@ -40,6 +40,8 @@ import ThemePicker from "./ThemePicker.jsx";
                 <button
                     id="mobile-menu-btn"
                     aria-label="Toggle menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
                     class="mobile-menu-btn"
                     style="color: var(--text-primary);"
                 >
@@ -103,6 +105,7 @@ import ThemePicker from "./ThemePicker.jsx";
 
         function closeMenu() {
             isOpen = false;
+            btn.setAttribute('aria-expanded', 'false');
             menu.style.maxHeight = "0";
             menuIcon.style.display = "";
             closeIcon.style.display = "none";
@@ -110,6 +113,7 @@ import ThemePicker from "./ThemePicker.jsx";
 
         btn.addEventListener("click", function () {
             isOpen = !isOpen;
+            btn.setAttribute('aria-expanded', String(isOpen));
             menu.style.maxHeight = isOpen ? menu.scrollHeight + "px" : "0";
             menuIcon.style.display = isOpen ? "none" : "";
             closeIcon.style.display = isOpen ? "" : "none";
