@@ -59,6 +59,7 @@ export default function ThemePicker() {
   const closeTimeoutRef = useRef(null);
 
   const openDropdown = useCallback(function () {
+    hasInteracted.current = true;
     clearTimeout(closeTimeoutRef.current);
     setIsOpen(true);
     setVisible(true);
@@ -126,6 +127,7 @@ export default function ThemePicker() {
   const dropdownRef = useRef(null);
   const toggleRef = useRef(null);
   const optionRefs = useRef({});
+  const hasInteracted = useRef(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const allOptions = useMemo(() => {
     var darks = themes.filter((t) => t.isDark === true).map((t) => t.id);
@@ -172,7 +174,7 @@ export default function ThemePicker() {
 
   useEffect(
     function () {
-      if (!isOpen && !visible && toggleRef.current) {
+      if (!isOpen && !visible && toggleRef.current && hasInteracted.current) {
         toggleRef.current.focus();
       }
     },
