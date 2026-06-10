@@ -233,10 +233,6 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-#root {
-  min-height: 100vh;
-}
-
 .gradient-text {
   background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end), var(--gradient-start));
   background-size: 200% 200%;
@@ -288,6 +284,11 @@ body {
   100% { background-position: 200% 0; }
 }
 
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
@@ -296,4 +297,112 @@ body {
   background: linear-gradient(90deg, var(--bg-border) 25%, var(--bg-secondary) 50%, var(--bg-border) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
+}
+
+.section-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.stagger-grid.visible .stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-fade-in {
+  opacity: 0;
+  animation: hero-fade-in var(--duration, 0.5s) ease var(--delay, 0s) forwards;
+}
+
+@keyframes hero-fade-in {
+  from { opacity: 0; transform: translateY(var(--start-y, 20px)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chevron-bounce {
+  animation: chevron-bounce 1.5s ease infinite;
+}
+
+@keyframes chevron-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.theme-dropdown {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.95);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+}
+.theme-dropdown.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.theme-scroll {
+  max-height: 20rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  scroll-padding-block-end: 2rem;
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+.theme-option {
+  transition: background-color 0.15s ease;
+}
+.theme-option:hover {
+  background-color: var(--bg-border);
+}
+.theme-option.active {
+  background-color: var(--accent-glow);
+  outline: 1.5px solid var(--accent);
+  outline-offset: -1.5px;
+}
+.theme-option.active:hover {
+  background-color: var(--accent-glow);
+}
+
+.dot {
+  border: none;
+}
+
+@keyframes theme-dropdown-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.nav-slide-in {
+  animation: nav-slide-in 0.5s ease forwards;
+}
+
+@keyframes nav-slide-in {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade-in,
+  .section-reveal,
+  .stagger-item,
+  .chevron-bounce,
+  .nav-slide-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }

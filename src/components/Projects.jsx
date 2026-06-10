@@ -1,7 +1,4 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { ExternalLink, Star, GitFork } from 'lucide-react'
-import ProjectSkeleton from './ProjectSkeleton'
+import { useState, useEffect, useRef } from 'react'
 
 const languageColors = {
   JavaScript: '#f1e05a',
@@ -26,23 +23,31 @@ const languageColors = {
   Svelte: '#ff3e00',
 }
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15 },
-  },
-}
-
-const item = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0 },
+function ProjectSkeleton() {
+  return (
+    <div className="glow-card p-6 animate-pulse">
+      <div className="flex items-start justify-between mb-4">
+        <div className="h-6 rounded-lg w-3/4" style={{ backgroundColor: 'var(--bg-border)' }} />
+        <div className="h-5 w-5 rounded" style={{ backgroundColor: 'var(--bg-border)' }} />
+      </div>
+      <div className="space-y-2 mb-4">
+        <div className="h-4 rounded w-full" style={{ backgroundColor: 'var(--bg-border)' }} />
+        <div className="h-4 rounded w-5/6" style={{ backgroundColor: 'var(--bg-border)' }} />
+      </div>
+      <div className="flex items-center gap-4">
+        <div className="h-4 w-16 rounded-full" style={{ backgroundColor: 'var(--bg-border)' }} />
+        <div className="h-4 w-10 rounded-full" style={{ backgroundColor: 'var(--bg-border)' }} />
+        <div className="h-4 w-10 rounded-full" style={{ backgroundColor: 'var(--bg-border)' }} />
+      </div>
+    </div>
+  )
 }
 
 export default function Projects() {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const gridRef = useRef(null)
 
   useEffect(() => {
     fetch('https://api.github.com/users/zaheen4/repos?sort=updated&per_page=100')
@@ -63,7 +68,6 @@ export default function Projects() {
             forks: repo.forks_count,
             url: repo.html_url,
             color: repo.language ? languageColors[repo.language] : 'var(--accent)',
-            updatedAt: repo.updated_at,
           }))
         setProjects(filtered)
         setLoading(false)
@@ -74,23 +78,23 @@ export default function Projects() {
       })
   }, [])
 
+  useEffect(() => {
+    if (!loading && gridRef.current) {
+      gridRef.current.classList.add('visible')
+    }
+  }, [loading])
+
   return (
     <section id="projects" className="py-24 px-4">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="section-reveal text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             Featured <span className="gradient-text">Projects</span>
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
             A selection of things I've built and contributed to
           </p>
-        </motion.div>
+        </div>
 
         {loading && (
           <div className="grid md:grid-cols-2 gap-6">
@@ -107,31 +111,39 @@ export default function Projects() {
         )}
 
         {!loading && !error && (
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-6"
+          <div
+            ref={gridRef}
+            className="stagger-grid grid md:grid-cols-2 gap-6"
           >
-            {projects.map((project) => (
-              <motion.a
+            {projects.map((project, i) => (
+              <a
                 key={project.name}
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                variants={item}
-                className="glow-card p-6 block group"
+                className="glow-card p-6 block group stagger-item"
+                style={{ transitionDelay: `${i * 0.15}s` }}
               >
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="text-xl font-semibold group-hover:text-accent transition-colors">
                     {project.name}
                   </h3>
-                  <ExternalLink
-                    size={20}
-                    className="group-hover:text-accent transition-colors flex-shrink-0 ml-4"
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="flex-shrink-0 ml-4 group-hover:text-accent transition-colors"
                     style={{ color: 'var(--text-muted)' }}
-                  />
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
                 </div>
                 <p className="mb-4 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   {project.description}
@@ -151,30 +163,32 @@ export default function Projects() {
                     )}
                     {project.stars > 0 && (
                       <div className="flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
-                        <Star size={14} className="text-yellow-500" />
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="#eab308" stroke="none">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
                         <span className="text-sm">{project.stars}</span>
                       </div>
                     )}
                     {project.forks > 0 && (
                       <div className="flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
-                        <GitFork size={14} />
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="18" r="3"/>
+                          <circle cx="6" cy="6" r="3"/>
+                          <circle cx="18" cy="6" r="3"/>
+                          <path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/>
+                          <path d="M12 12v3"/>
+                        </svg>
                         <span className="text-sm">{project.forks}</span>
                       </div>
                     )}
                   </div>
                 </div>
-              </motion.a>
+              </a>
             ))}
-          </motion.div>
+          </div>
         )}
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-12"
-        >
+        <div className="text-center mt-12">
           <a
             href="https://github.com/zaheen4"
             target="_blank"
@@ -183,9 +197,13 @@ export default function Projects() {
             style={{ borderColor: 'var(--bg-border)', color: 'var(--text-primary)' }}
           >
             View All on GitHub
-            <ExternalLink size={16} />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

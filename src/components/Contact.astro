@@ -1,0 +1,62 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const contacts = [
+  {
+    name: 'Email',
+    icon: 'lucide:mail',
+    href: 'mailto:zwaseet@gmail.com',
+    color: '#ea4335',
+  },
+  {
+    name: 'LinkedIn',
+    icon: 'simple-icons:linkedin',
+    href: 'https://www.linkedin.com/in/mir-zaheen-waseet',
+    color: '#0077b5',
+  },
+  {
+    name: 'Facebook',
+    icon: 'simple-icons:facebook',
+    href: 'https://www.facebook.com/zaheen.4',
+    color: '#1877f2',
+  },
+  {
+    name: 'Discord',
+    icon: 'simple-icons:discord',
+    href: 'https://discord.com/users/353566198304342016',
+    color: '#5865f2',
+  },
+];
+---
+
+<section id="contact" class="py-24 px-4" style="background-color: var(--bg-secondary);">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="section-reveal">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+        Get In <span class="gradient-text">Touch</span>
+      </h2>
+      <p class="text-lg max-w-xl mx-auto mb-12" style="color: var(--text-secondary);">
+        Have a project in mind or just want to chat? Feel free to reach out through any of these channels.
+      </p>
+    </div>
+
+    <div class="stagger-grid flex flex-wrap justify-center gap-6">
+      {contacts.map((contact, i) => (
+        <a
+          href={contact.href}
+          target={contact.href.startsWith('http') ? '_blank' : undefined}
+          rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+          class="stagger-item glow-card p-6 w-40 text-center group"
+          style={`--i: ${i}; transition-delay: calc(var(--i) * 0.1s);`}
+        >
+          <div class="w-14 h-14 mx-auto mb-3 rounded-xl flex items-center justify-center transition-transform duration-200 group-hover:scale-110" style="background-color: {contact.color}20;">
+            <Icon name={contact.icon} width="26" height="26" style={`color: ${contact.color}`} />
+          </div>
+          <p class="text-sm font-medium group-hover:text-primary transition-colors" style="color: var(--text-secondary);">
+            {contact.name}
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

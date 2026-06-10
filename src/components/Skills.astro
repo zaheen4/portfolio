@@ -1,0 +1,37 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const skills = [
+  { name: 'Python', icon: 'simple-icons:python', level: 'Advanced', color: '#3776AB' },
+  { name: 'JavaScript', icon: 'simple-icons:javascript', level: 'Intermediate', color: '#F7DF1E' },
+  { name: 'React', icon: 'simple-icons:react', level: 'Intermediate', color: '#61DAFB' },
+  { name: 'Web Scraping', icon: 'lucide:terminal', level: 'Advanced', color: 'var(--accent)' },
+  { name: 'Automation', icon: 'lucide:cpu', level: 'Advanced', color: '#06b6d4' },
+  { name: 'GUI Development', icon: 'lucide:layout-dashboard', level: 'Intermediate', color: '#10b981' },
+];
+---
+
+<section id="skills" class="py-24 px-4" style="background-color: var(--bg-secondary);">
+  <div class="max-w-6xl mx-auto">
+    <div class="section-reveal text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+        My <span class="gradient-text">Skills</span>
+      </h2>
+      <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary);">
+        Technologies and tools I work with to bring ideas to life
+      </p>
+    </div>
+
+    <div class="stagger-grid grid grid-cols-2 md:grid-cols-3 gap-6">
+      {skills.map((skill, i) => (
+        <div class="stagger-item glow-card p-6 text-center cursor-default" style={`--i: ${i}; transition-delay: calc(var(--i) * 0.1s);`}>
+          <div class="w-14 h-14 mx-auto mb-4 rounded-xl flex items-center justify-center" style="background-color: {skill.color}20;">
+            <Icon name={skill.icon} width="28" height="28" style={`color: ${skill.color}`} />
+          </div>
+          <h3 class="text-lg font-semibold mb-1">{skill.name}</h3>
+          <p class="text-sm" style="color: var(--text-muted);">{skill.level}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
