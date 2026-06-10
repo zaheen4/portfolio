@@ -1,0 +1,38 @@
+---
+import { Icon } from 'astro-icon/components';
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="404 - Page Not Found | Mir Zaheen Waseet" description="Page not found">
+  <section class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4">
+    <div class="absolute inset-0 opacity-30" style="background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 70%);"></div>
+
+    <div class="relative z-10 text-center">
+      <p class="hero-fade-in text-lg mb-2 tracking-wide" style="--delay: 0.2s; color: var(--text-secondary);">
+        Error 404
+      </p>
+
+      <h1 class="hero-fade-in text-8xl sm:text-9xl font-bold mb-6" style="--delay: 0.4s; --duration: 0.6s;">
+        <span class="gradient-text">404</span>
+      </h1>
+
+      <p class="hero-fade-in text-xl sm:text-2xl max-w-xl mx-auto mb-3" style="--delay: 0.6s; color: var(--text-secondary);">
+        This page got lost in the void
+      </p>
+
+      <p class="hero-fade-in mb-10" style="--delay: 0.7s; color: var(--text-muted);">
+        The link you followed probably expired or moved.
+      </p>
+
+      <div class="hero-fade-in" style="--delay: 0.9s;">
+        <a href="/portfolio/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg transition-colors duration-200 font-medium text-white"
+           style="background-color: var(--accent);"
+           onmouseenter="this.style.backgroundColor='var(--accent-light)'"
+           onmouseleave="this.style.backgroundColor='var(--accent)'">
+          <Icon name="lucide:home" width="18" height="18" />
+          Go Home
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

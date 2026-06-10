@@ -1,0 +1,38 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<section id="about" class="py-24 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="section-reveal flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-shrink-0">
+        <div class="w-48 h-48 rounded-full overflow-hidden border-2 glow-card" style="border-color: var(--accent);">
+          <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXd6eWowY3IxYmo1ejFjbWtocDQyNG50N3NiOG1waWd5cTR4MG12ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tIeCLkB8geYtW/giphy.gif" alt="Mir Zaheen Waseet" class="w-full h-full object-cover" />
+        </div>
+      </div>
+
+      <div class="text-center md:text-left">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+          About <span class="gradient-text">Me</span>
+        </h2>
+        <p class="text-lg leading-relaxed mb-6" style="color: var(--text-secondary);">
+          I'm a developer who loves building practical tools and automations.
+          From GUI applications that streamline workflows to web scrapers that
+          fetch data efficiently, I enjoy turning repetitive tasks into elegant
+          solutions. Based in Bangladesh, I'm always exploring new technologies
+          and finding creative ways to solve problems with code.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center md:justify-start" style="color: var(--text-muted);">
+          <div class="flex items-center gap-2">
+            <Icon name="lucide:map-pin" width="18" height="18" style="color: var(--accent);" />
+            <span>Bangladesh</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <Icon name="lucide:clock" width="18" height="18" style="color: var(--accent);" />
+            <span>UTC +6:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
