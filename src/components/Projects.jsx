@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { animate, stagger } from 'animejs'
 
 const languageColors = {
   JavaScript: '#f1e05a',
@@ -79,10 +80,19 @@ export default function Projects() {
   }, [])
 
   useEffect(() => {
-    if (!loading && gridRef.current) {
-      gridRef.current.classList.add('visible')
+    if (!loading && !error && projects.length && gridRef.current) {
+      var cards = gridRef.current.querySelectorAll('.stagger-item')
+      if (cards.length) {
+        animate(cards, {
+          opacity: [0, 1],
+          translateY: [20, 0],
+          delay: stagger(150),
+          ease: 'outBack',
+          duration: 600,
+        })
+      }
     }
-  }, [loading])
+  }, [loading, error, projects])
 
   return (
     <section id="projects" className="py-24 px-4">
@@ -123,7 +133,6 @@ export default function Projects() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="glow-card p-6 block group stagger-item"
-                style={{ transitionDelay: `${i * 0.15}s` }}
               >
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="text-xl font-semibold group-hover:text-accent transition-colors">

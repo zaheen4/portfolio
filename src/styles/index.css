@@ -20,7 +20,6 @@
   --gradient-start: #d97706;
   --gradient-mid: #f59e0b;
   --gradient-end: #ea580c;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 [data-theme="warm-dark"] {
@@ -389,11 +388,6 @@ body {
 
 .dot {
   border: none;
-}
-
-@keyframes theme-dropdown-in {
-  from { opacity: 0; transform: translateY(-8px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .nav-slide-in {
