@@ -39,7 +39,7 @@ const rows = [
       {rows.map((row, ri) => (
         <div class="w-full flex flex-col items-center gap-4">
           {ri > 0 && (
-            <div class="w-1/2 h-px" style="background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 25%, transparent), transparent);"></div>
+            <div class="row-divider w-1/2 h-px" style="background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 25%, transparent), transparent);"></div>
           )}
           <div class="stagger-grid flex flex-wrap justify-center gap-5">
             {row.map((skill, si) => (
@@ -99,60 +99,59 @@ const rows = [
   .skill-chip.is-float:hover {
     animation-play-state: paused;
   }
+
+  .row-divider {
+    opacity: 0;
+    transform: scaleX(0);
+  }
 </style>
 
 <script>
   import { animate, stagger } from 'animejs'
 
-  // A) Stagger entrance with outBack easing
-  var grids = document.querySelectorAll('.stagger-grid')
-  if (grids.length && 'IntersectionObserver' in window) {
-    var chipObserver = new IntersectionObserver(function (entries) {
+  var container = document.getElementById('skills-rows')
+  if (container && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          var chips = entry.target.querySelectorAll('.skill-chip')
-          if (chips.length) {
-            animate(chips, {
-              opacity: [0, 1],
-              translateY: [20, 0],
-              delay: stagger(80),
-              ease: 'outBack',
-              duration: 600,
-              onComplete: function () {
-                chips.forEach(function (chip) {
-                  chip.style.transform = ''
-                  chip.classList.add('is-float')
-                })
-              },
-            })
-          }
-          chipObserver.unobserve(entry.target)
+          var grids = entry.target.querySelectorAll('.stagger-grid')
+          var rowStart = 0
+          grids.forEach(function (grid, ri) {
+            var chips = grid.querySelectorAll('.skill-chip')
+            var divider = grid.parentElement.querySelector('.row-divider')
+
+            if (divider) {
+              animate(divider, {
+                opacity: [0, 1],
+                scaleX: [0, 1],
+                duration: 400,
+                ease: 'outCubic',
+                delay: rowStart,
+              })
+            }
+
+            if (chips.length) {
+              animate(chips, {
+                opacity: [0, 1],
+                translateY: [20, 0],
+                delay: stagger(80, { start: rowStart }),
+                ease: 'outBack',
+                duration: 600,
+                onComplete: function () {
+                  chips.forEach(function (chip) {
+                    chip.style.transform = ''
+                    chip.classList.add('is-float')
+                  })
+                },
+              })
+            }
+
+            rowStart += 250
+          })
+          observer.unobserve(entry.target)
         }
       })
     }, { threshold: 0.2 })
-
-    grids.forEach(function (g) {
-      if (g.classList.contains('visible')) {
-        var chips = g.querySelectorAll('.skill-chip')
-        if (chips.length) {
-          animate(chips, {
-            opacity: [0, 1],
-            translateY: [20, 0],
-            delay: stagger(80),
-            ease: 'outBack',
-            duration: 600,
-            onComplete: function () {
-              chips.forEach(function (chip) {
-                chip.style.transform = ''
-                chip.classList.add('is-float')
-              })
-            },
-          })
-        }
-      } else {
-        chipObserver.observe(g)
-      }
-    })
+    observer.observe(container)
   }
-
 </script>

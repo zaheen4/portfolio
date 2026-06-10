@@ -70,26 +70,22 @@ import ThemePicker from "./ThemePicker.jsx";
             <a
                 href="#about"
                 class="block hover:text-accent transition-colors duration-200"
-                style="color: var(--text-secondary);"
-                onclick="closeMobileMenu()">About</a
+                style="color: var(--text-secondary);">About</a
             >
             <a
                 href="#skills"
                 class="block hover:text-accent transition-colors duration-200"
-                style="color: var(--text-secondary);"
-                onclick="closeMobileMenu()">Skills</a
+                style="color: var(--text-secondary);">Skills</a
             >
             <a
                 href="#projects"
                 class="block hover:text-accent transition-colors duration-200"
-                style="color: var(--text-secondary);"
-                onclick="closeMobileMenu()">Projects</a
+                style="color: var(--text-secondary);">Projects</a
             >
             <a
                 href="#contact"
                 class="block hover:text-accent transition-colors duration-200"
-                style="color: var(--text-secondary);"
-                onclick="closeMobileMenu()">Contact</a
+                style="color: var(--text-secondary);">Contact</a
             >
         </div>
     </div>
@@ -101,19 +97,26 @@ import ThemePicker from "./ThemePicker.jsx";
         var menu = document.getElementById("mobile-menu");
         var menuIcon = document.getElementById("menu-icon");
         var closeIcon = document.getElementById("close-icon");
+        var links = menu ? menu.querySelectorAll("a") : [];
         if (!btn || !menu) return;
         var isOpen = false;
+
+        function closeMenu() {
+            isOpen = false;
+            menu.style.maxHeight = "0";
+            menuIcon.style.display = "";
+            closeIcon.style.display = "none";
+        }
+
         btn.addEventListener("click", function () {
             isOpen = !isOpen;
             menu.style.maxHeight = isOpen ? menu.scrollHeight + "px" : "0";
             menuIcon.style.display = isOpen ? "none" : "";
             closeIcon.style.display = isOpen ? "" : "none";
         });
-        window.closeMobileMenu = function () {
-            isOpen = false;
-            menu.style.maxHeight = "0";
-            menuIcon.style.display = "";
-            closeIcon.style.display = "none";
-        };
+
+        links.forEach(function (link) {
+            link.addEventListener("click", closeMenu);
+        });
     })();
 </script>
