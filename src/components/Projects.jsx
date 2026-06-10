@@ -88,9 +88,10 @@ export default function Projects() {
     <section id="projects" className="py-24 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="section-reveal text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-1">
             Featured <span className="gradient-text">Projects</span>
           </h2>
+          <div className="section-underline mb-4"></div>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
             A selection of things I've built and contributed to
           </p>

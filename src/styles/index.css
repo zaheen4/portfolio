@@ -321,6 +321,16 @@ body {
   transform: translateY(0);
 }
 
+.section-underline {
+  display: inline-block;
+  width: 64px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
 .hero-fade-in {
   opacity: 0;
   animation: hero-fade-in var(--duration, 0.5s) ease var(--delay, 0s) forwards;

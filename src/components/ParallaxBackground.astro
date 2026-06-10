@@ -1,0 +1,58 @@
+<div id="parallax-bg" aria-hidden="true">
+  <div class="parallax-orb parallax-orb-1"></div>
+  <div class="parallax-orb parallax-orb-2"></div>
+</div>
+
+<style>
+  #parallax-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .parallax-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    will-change: transform;
+  }
+
+  .parallax-orb-1 {
+    width: 600px;
+    height: 600px;
+    background: var(--gradient-start);
+    opacity: 0.04;
+    top: 15%;
+    left: -10%;
+  }
+
+  .parallax-orb-2 {
+    width: 400px;
+    height: 400px;
+    background: var(--gradient-mid);
+    opacity: 0.04;
+    bottom: 10%;
+    right: -5%;
+  }
+</style>
+
+<script>
+  var orb1 = document.querySelector('.parallax-orb-1')
+  var orb2 = document.querySelector('.parallax-orb-2')
+  if (orb1 && orb2) {
+    var ticking = false
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          var y = window.scrollY
+          orb1.style.transform = 'translateY(' + (y * 0.08) + 'px)'
+          orb2.style.transform = 'translateY(' + (y * -0.05) + 'px)'
+          ticking = false
+        })
+        ticking = true
+      }
+    })
+  }
+</script>

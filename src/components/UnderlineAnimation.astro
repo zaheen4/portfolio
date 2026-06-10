@@ -1,0 +1,51 @@
+<script>
+    import { animate } from "animejs";
+
+    // Section underline expand on scroll
+    var underlines = document.querySelectorAll(".section-underline");
+    if (underlines.length && "IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(
+            function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        animate(entry.target, {
+                            scaleX: [0, 1],
+                            duration: 500,
+                            ease: "outCubic",
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.3 },
+        );
+        underlines.forEach(function (el) {
+            observer.observe(el);
+        });
+    }
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener("click", function (e) {
+            var id = this.getAttribute("href");
+            if (!id || id === "#") return;
+            var target = document.querySelector(id);
+            if (!target) return;
+            e.preventDefault();
+            var start = window.scrollY;
+            var targetTop = target.getBoundingClientRect().top + start;
+            var endPos = targetTop - 64;
+            var diff = endPos - start;
+            if (Math.abs(diff) < 5) return;
+            var state = { t: 0 };
+            animate(state, {
+                t: 1,
+                duration: 600,
+                ease: "outCubic",
+                onUpdate: function () {
+                    window.scrollTo(0, start + diff * state.t);
+                },
+            });
+        });
+    });
+</script>
