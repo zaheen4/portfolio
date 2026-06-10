@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 ---
 
-<section id="about" class="py-24 px-4">
+<section id="about" aria-labelledby="about-heading" class="py-24 px-4">
   <div class="max-w-6xl mx-auto">
     <div class="section-reveal flex flex-col md:flex-row items-center gap-12">
       <div class="flex-shrink-0 about-image">
@@ -15,7 +15,7 @@ import { Icon } from 'astro-icon/components';
       </div>
 
       <div class="text-center md:text-left">
-        <h2 class="text-3xl sm:text-4xl font-bold mb-1">
+        <h2 id="about-heading" class="text-3xl sm:text-4xl font-bold mb-1">
           About <span class="gradient-text">Me</span>
         </h2>
         <div class="section-underline mb-4"></div>

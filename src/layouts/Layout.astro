@@ -40,13 +40,16 @@ const { title = "Mir Zaheen Waseet | Portfolio", description = "Mir Zaheen Wasee
     </script>
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <div
       id="theme-overlay"
       style="position:fixed;inset:0;z-index:9999;pointer-events:none;background:var(--bg-primary);opacity:0;transition:opacity 0.15s ease;"
     ></div>
 
     <ParallaxBackground />
-    <slot />
+    <main id="main-content">
+      <slot />
+    </main>
 
     <UnderlineAnimation />
     <BackToTop />

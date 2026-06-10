@@ -52,10 +52,10 @@ try {
 }
 ---
 
-<section id="projects" class="py-24 px-4">
+<section id="projects" aria-labelledby="projects-heading" class="py-24 px-4">
   <div class="max-w-6xl mx-auto">
     <div class="section-reveal text-center mb-16">
-      <h2 class="text-3xl sm:text-4xl font-bold mb-1">
+      <h2 id="projects-heading" class="text-3xl sm:text-4xl font-bold mb-1">
         Featured <span class="gradient-text">Projects</span>
       </h2>
       <div class="section-underline mb-4"></div>
@@ -92,11 +92,13 @@ try {
                 stroke-linejoin="round"
                 class="flex-shrink-0 ml-4 group-hover:text-accent transition-colors"
                 style="color: var(--text-muted);"
+                aria-hidden="true"
               >
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                 <polyline points="15 3 21 3 21 9"/>
                 <line x1="10" y1="14" x2="21" y2="3"/>
               </svg>
+              <span class="sr-only">(opens in new tab)</span>
             </div>
             <p class="mb-4 text-sm leading-relaxed" style="color: var(--text-secondary);">
               {project.description}
@@ -150,11 +152,12 @@ try {
         style="border-color: var(--bg-border); color: var(--text-primary);"
       >
         View All on GitHub
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
           <polyline points="15 3 21 3 21 9"/>
           <line x1="10" y1="14" x2="21" y2="3"/>
         </svg>
+        <span class="sr-only">(opens in new tab)</span>
       </a>
     </div>
   </div>
