@@ -25,10 +25,7 @@ import Layout from '../layouts/Layout.astro'
       </p>
 
       <div class="hero-fade-in" style="--delay: 0.9s;">
-        <a href="/portfolio/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg transition-colors duration-200 font-medium text-white"
-           style="background-color: var(--accent);"
-           onmouseenter="this.style.backgroundColor='var(--accent-light)'"
-           onmouseleave="this.style.backgroundColor='var(--accent)'">
+        <a href="/portfolio/" class="btn-404 inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium">
           <Icon name="lucide:home" width="18" height="18" />
           Go Home
         </a>
@@ -36,3 +33,14 @@ import Layout from '../layouts/Layout.astro'
     </div>
   </section>
 </Layout>
+
+<style>
+  .btn-404 {
+    background-color: var(--accent);
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+  .btn-404:hover {
+    background-color: var(--accent-light);
+  }
+</style>

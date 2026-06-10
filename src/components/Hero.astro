@@ -19,7 +19,7 @@ import { Icon } from 'astro-icon/components';
     </p>
 
     <div class="hero-fade-in flex gap-4 justify-center" style="--delay: 2.0s; --duration: 0.5s;">
-      <a href="#projects" class="px-6 py-3 rounded-lg transition-colors duration-200 font-medium text-white" style="background-color: var(--accent);" onmouseenter="this.style.backgroundColor='var(--accent-light)'" onmouseleave="this.style.backgroundColor='var(--accent)'">
+      <a href="#projects" class="btn-primary px-6 py-3 rounded-lg font-medium">
         View My Work
       </a>
       <a href="#contact" class="px-6 py-3 border rounded-lg transition-colors duration-200 font-medium" style="border-color: var(--bg-border); color: var(--text-primary);">
@@ -34,6 +34,17 @@ import { Icon } from 'astro-icon/components';
     </div>
   </a>
 </section>
+
+<style>
+  .btn-primary {
+    background-color: var(--accent);
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+  .btn-primary:hover {
+    background-color: var(--accent-light);
+  }
+</style>
 
 <script>
   import { animate, stagger } from 'animejs'
