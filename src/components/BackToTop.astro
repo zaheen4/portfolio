@@ -1,0 +1,67 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button id="back-to-top" class="back-to-top" aria-label="Back to top">
+  <Icon name="lucide:arrow-up" width="20" height="20" />
+</button>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 16px var(--accent-glow);
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .back-to-top:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 24px var(--accent-glow);
+  }
+</style>
+
+<script>
+  import { animate } from 'animejs'
+
+  var btn = document.getElementById('back-to-top')
+  if (btn) {
+    window.addEventListener('scroll', function () {
+      btn.classList.toggle('visible', window.scrollY > 300)
+    })
+
+    btn.addEventListener('click', function () {
+      var start = window.scrollY
+      if (start < 5) return
+      var state = { t: 0 }
+      animate(state, {
+        t: 1,
+        duration: 500,
+        ease: 'outCubic',
+        onUpdate: function () {
+          window.scrollTo(0, start * (1 - state.t))
+        },
+      })
+    })
+  }
+</script>

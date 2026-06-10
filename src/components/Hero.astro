@@ -6,19 +6,19 @@ import { Icon } from 'astro-icon/components';
   <div class="absolute inset-0 opacity-30" style="background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 70%);"></div>
 
   <div class="relative z-10 text-center">
-    <p class="hero-fade-in text-accent-light text-lg mb-4 tracking-wide" style="--delay: 0.2s; --duration: 0.5s; --start-y: 20px;">
+    <p id="hero-greeting" class="text-accent-light text-lg mb-4 tracking-wide" style="opacity: 0;">
       Hello, I'm
     </p>
 
-    <h1 class="hero-fade-in text-5xl sm:text-7xl lg:text-8xl font-bold mb-6" style="--delay: 0.4s; --duration: 0.6s; --start-y: 30px;">
-      <span class="gradient-text">Mir Zaheen Waseet</span>
+    <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold mb-6">
+      <span class="gradient-text" id="hero-title">Mir Zaheen Waseet</span>
     </h1>
 
-    <p class="hero-fade-in text-xl sm:text-2xl max-w-2xl mx-auto mb-8" style="--delay: 0.6s; --duration: 0.5s; --start-y: 20px; color: var(--text-secondary);">
+    <p class="hero-fade-in text-xl sm:text-2xl max-w-2xl mx-auto mb-8" style="--delay: 1.8s; --duration: 0.5s; --start-y: 20px; color: var(--text-secondary);">
       Building tools that automate the boring stuff
     </p>
 
-    <div class="hero-fade-in flex gap-4 justify-center" style="--delay: 0.8s; --duration: 0.5s;">
+    <div class="hero-fade-in flex gap-4 justify-center" style="--delay: 2.0s; --duration: 0.5s;">
       <a href="#projects" class="px-6 py-3 rounded-lg transition-colors duration-200 font-medium text-white" style="background-color: var(--accent);" onmouseenter="this.style.backgroundColor='var(--accent-light)'" onmouseleave="this.style.backgroundColor='var(--accent)'">
         View My Work
       </a>
@@ -28,9 +28,52 @@ import { Icon } from 'astro-icon/components';
     </div>
   </div>
 
-  <a href="#about" class="hero-fade-in mt-8" style="--delay: 1.2s;">
+  <a href="#about" class="hero-fade-in mt-8" style="--delay: 2.2s;">
     <div class="chevron-bounce" style="color: var(--text-muted);">
       <Icon name="lucide:chevron-down" width="32" height="32" />
     </div>
   </a>
 </section>
+
+<script>
+  import { animate, stagger } from 'animejs'
+
+  // Greeting letter stagger
+  var greetingEl = document.getElementById('hero-greeting')
+  if (greetingEl) {
+    var text = greetingEl.textContent || ''
+    greetingEl.innerHTML = text.split('').map(function (char) {
+      if (char === ' ') return '<span class="greeting-letter" style="display:inline-block;opacity:0">&nbsp;</span>'
+      return '<span class="greeting-letter" style="display:inline-block;opacity:0">' + char + '</span>'
+    }).join('')
+    greetingEl.style.opacity = '1'
+    animate('.greeting-letter', {
+      opacity: [0, 1],
+      translateY: [15, 0],
+      duration: 400,
+      delay: stagger(40),
+      ease: 'outBack',
+    })
+  }
+
+  // Name mask sweep (delayed to overlap with greeting)
+  var title = document.getElementById('hero-title')
+  if (title) {
+    title.style.webkitMaskImage = 'linear-gradient(to right, transparent, transparent)'
+    title.style.maskImage = 'linear-gradient(to right, transparent, transparent)'
+    setTimeout(function () {
+      var state = { t: 0 }
+      animate(state, {
+        t: 1,
+        duration: 1500,
+        ease: 'inOutCubic',
+        onUpdate: function () {
+          var progress = state.t * 100
+          var grad = 'linear-gradient(to right, black, black ' + progress + '%, transparent ' + (progress + 15) + '%, transparent 100%)'
+          title.style.webkitMaskImage = grad
+          title.style.maskImage = grad
+        },
+      })
+    }, 300)
+  }
+</script>

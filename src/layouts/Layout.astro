@@ -1,5 +1,8 @@
 ---
 import '../styles/index.css'
+import UnderlineAnimation from '../components/UnderlineAnimation.astro'
+import BackToTop from '../components/BackToTop.astro'
+import ParallaxBackground from '../components/ParallaxBackground.astro'
 
 export interface Props {
   title?: string;
@@ -38,7 +41,11 @@ const { title = "Mir Zaheen Waseet | Portfolio", description = "Mir Zaheen Wasee
       style="position:fixed;inset:0;z-index:9999;pointer-events:none;background:var(--bg-primary);opacity:0;transition:opacity 0.15s ease;"
     ></div>
 
+    <ParallaxBackground />
     <slot />
+
+    <UnderlineAnimation />
+    <BackToTop />
 
     <script>
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
