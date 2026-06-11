@@ -1,49 +1,39 @@
 # Mir Zaheen Waseet — Portfolio
 
-Personal portfolio website built with React, Vite, and Tailwind CSS.
+Personal portfolio website built with Astro, anime.js, and Tailwind CSS.
 
 **Live:** https://zaheen4.github.io/portfolio
 
 ## Tech Stack
 
-- **React** — UI library
-- **Vite** — Build tool and dev server
-- **Tailwind CSS** — Utility-first styling
-- **Framer Motion** — Animations
-- **Lucide React** — Icons
-- **React Icons** — Brand icons
+- **Astro 6** — Static site generation with optional React islands
+- **anime.js** — Animations (stagger entrances, mask sweep, scramble text, float effects)
+- **Tailwind CSS 4** — Utility-first styling
+- **astro-icon** — Icons (Lucide + Simple Icons sets, zero runtime JS)
+- **React 19** — Only used for the ThemePicker island (`client:idle`)
 
 ## Features
 
-- **Theme Picker** — 12 code editor themes (Dracula, Nord, Monokai, Tokyo Night, Catppuccin, One Dark, GitHub Light, Solarized Light, etc.) plus system default
-- **Live GitHub Projects** — Fetches top repos dynamically from the GitHub API
-- **Skeleton Loaders** — Polished loading states while data fetches
-- **Smooth Transitions** — Crossfade effect when switching themes
+- **12 Themes** — Code editor-inspired themes (Dracula, Nord, Monokai, Tokyo Night, Catppuccin, One Dark, GitHub Light, Solarized Light, etc.) with crossfade transitions
+- **Animated Sections** — Stagger letter reveals, mask sweeps, glass chip floats, scramble text effects
+- **Static Projects** — GitHub repositories fetched at build time, rendered as static HTML cards
+- **Parallax Background** — Amber glow orbs that drift on scroll
+- **Glass Chip Design** — Skills and contact links with specular glow on hover
 - **Responsive** — Works on all screen sizes
+- **SEO** — OG/Twitter meta, canonical, JSON-LD, auto-generated sitemap
 
 ## Getting Started
 
 ```bash
-# Install dependencies
 npm install
-
-# Start dev server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm run dev       # localhost:4321/portfolio
+npm run build     # static output in dist/
+npm run preview   # preview production build
 ```
 
 ## Deployment
 
-Deployed to **GitHub Pages** via GitHub Actions. Auto-deploys on every push to `main`.
-
-Also works out of the box with:
-- **Vercel** — Connect repo, auto-deploys on push
-- **Netlify** — Build command: `npm run build`, publish: `dist`
+Deployed to **GitHub Pages** via GitHub Actions (`.github/workflows/deploy.yml`). Auto-deploys on every push to `main`.
 
 ## License
 
