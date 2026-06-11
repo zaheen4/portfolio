@@ -14,7 +14,7 @@ import { Icon } from 'astro-icon/components';
       <span class="gradient-text" id="hero-title">Mir Zaheen Waseet</span>
     </h1>
 
-    <p class="hero-fade-in text-xl sm:text-2xl max-w-2xl mx-auto mb-8" style="--delay: 1.8s; --duration: 0.5s; --start-y: 20px; color: var(--text-secondary);">
+    <p id="hero-tagline" class="text-xl sm:text-2xl max-w-2xl mx-auto mb-8" style="opacity:0; color: var(--text-secondary);">
       Building tools that automate the boring stuff
     </p>
 
@@ -48,6 +48,7 @@ import { Icon } from 'astro-icon/components';
 
 <script>
   import { animate, stagger } from 'animejs'
+  import { scrambleText } from 'animejs/text'
 
   // Greeting letter stagger
   var greetingEl = document.getElementById('hero-greeting')
@@ -86,5 +87,61 @@ import { Icon } from 'astro-icon/components';
         },
       })
     }, 300)
+  }
+
+  // Tagline scramble reveal with mask sweep (after name mask ends)
+  var tagline = document.getElementById('hero-tagline')
+  if (tagline) {
+    tagline.style.webkitMaskImage = 'linear-gradient(to right, transparent, transparent)'
+    tagline.style.maskImage = 'linear-gradient(to right, transparent, transparent)'
+    var scrambleOpts = {
+      from: 'left',
+      ease: 'linear',
+      chars: 'lowercase uppercase numbers symbols braille blocks shades',
+      cursor: '░▒▓█',
+      override: '',
+      perturbation: .3,
+      duration: 1200,
+      revealRate: 50,
+      settleDuration: 200,
+      settleRate: 20,
+    }
+    setTimeout(function () {
+      tagline.style.opacity = '1'
+      var state = { t: 0 }
+      animate(state, {
+        t: 1,
+        duration: 350,
+        ease: 'outCubic',
+        onUpdate: function () {
+          var progress = state.t * 100
+          var grad = 'linear-gradient(to right, black, black ' + progress + '%, transparent ' + (progress + 5) + '%, transparent 100%)'
+          tagline.style.webkitMaskImage = grad
+          tagline.style.maskImage = grad
+        },
+      })
+      animate(tagline, {
+        innerHTML: scrambleText(scrambleOpts)
+      })
+    }, 1900)
+    tagline.addEventListener('pointerdown', function () {
+      animate(tagline, {
+        innerHTML: scrambleText({
+          from: 'auto',
+          reversed: false,
+          ease: 'linear',
+          chars: 'lowercase uppercase numbers symbols braille blocks shades',
+          cursor: '░▒▓█',
+          override: false,
+          perturbation: 0,
+          duration: 800,
+          delay: 0,
+          revealDelay: 0,
+          revealRate: 50,
+          settleDuration: 200,
+          settleRate: 30,
+        })
+      })
+    })
   }
 </script>
