@@ -24,6 +24,38 @@ const { title = "Mir Zaheen Waseet | Portfolio", description = "Mir Zaheen Wasee
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='76' text-anchor='middle' font-size='80' font-family='system-ui' font-weight='bold' fill='%23d97706'>Z</text></svg>" />
     <title>{title}</title>
 
+    <link rel="canonical" href="https://zaheen4.github.io/portfolio/" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://zaheen4.github.io/portfolio/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://zaheen4.github.io/portfolio/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://zaheen4.github.io/portfolio/og-image.svg" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mir Zaheen Waseet",
+      "url": "https://zaheen4.github.io/portfolio/",
+      "sameAs": [
+        "https://github.com/zaheen4",
+        "https://www.linkedin.com/in/mir-zaheen-waseet"
+      ],
+      "affiliation": {
+        "@type": "Organization",
+        "name": "National Institute of Textile Engineering and Research (NITER)"
+      }
+    }
+    </script>
+
     <script is:inline>
       (function() {
         try {

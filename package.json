@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^5.0.7",
+    "@astrojs/sitemap": "^3.7.3",
     "@iconify-json/lucide": "^1.2.111",
     "@iconify-json/simple-icons": "^1.2.86",
     "animejs": "^4.4.1",
