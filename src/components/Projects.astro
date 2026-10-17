@@ -1,7 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components'
+import fallbackProjects from '../data/projects-fallback.json'
 
-const languageColors = {
+const languageColors: Record<string, string> = {
   JavaScript: '#f1e05a',
   TypeScript: '#3178c6',
   Python: '#3572A5',
@@ -22,33 +23,46 @@ const languageColors = {
   Lua: '#000080',
   Vue: '#41b883',
   Svelte: '#ff3e00',
+  Astro: '#ff5a03',
 }
 
-let projects = []
-let fetchError = false
+const COLOR_FALLBACK = '#8b949e'
+
+// Curated featured repos, in display order
+const FEATURED = [
+  'mediflow-platform',
+  'vocab-vault',
+  'routine-to-gsheet',
+  'omarchy-wordmark-kit',
+]
+
+function shape(repo: any) {
+  return {
+    name: repo.name,
+    description: repo.description || 'No description provided.',
+    language: repo.language,
+    stars: repo.stargazers_count,
+    forks: repo.forks_count,
+    url: repo.html_url,
+    color: repo.language ? languageColors[repo.language] ?? COLOR_FALLBACK : 'var(--accent)',
+  }
+}
+
+// Live data takes priority; committed JSON is the graceful fallback
+let projects = fallbackProjects
 
 try {
-  const res = await fetch('https://api.github.com/users/zaheen4/repos?sort=updated&per_page=100')
-  if (res.ok) {
-    const data = await res.json()
-    projects = data
-      .filter((repo) => !repo.fork)
-      .sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0))
-      .slice(0, 4)
-      .map((repo) => ({
-        name: repo.name,
-        description: repo.description || 'No description provided.',
-        language: repo.language,
-        stars: repo.stargazers_count,
-        forks: repo.forks_count,
-        url: repo.html_url,
-        color: repo.language ? languageColors[repo.language] : 'var(--accent)',
-      }))
-  } else {
-    fetchError = true
-  }
+  const token = process.env.GITHUB_TOKEN
+  const res = await fetch('https://api.github.com/users/zaheen4/repos?sort=updated&per_page=100', {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  })
+  if (!res.ok) throw new Error(`GitHub API responded ${res.status}`)
+  const data = await res.json()
+  const byName = new Map<string, any>(data.filter((repo: any) => !repo.fork).map((repo: any) => [repo.name, repo]))
+  const fresh = FEATURED.map((name) => byName.get(name)).filter(Boolean).map(shape)
+  if (fresh.length) projects = fresh
 } catch {
-  fetchError = true
+  // keep the committed fallback
 }
 ---
 
@@ -64,12 +78,7 @@ try {
       </p>
     </div>
 
-    {fetchError && projects.length === 0 ? (
-      <p class="text-center py-12" style="color: #ef4444;">
-        Unable to load projects at this time.
-      </p>
-    ) : (
-      <div class="stagger-grid grid md:grid-cols-2 gap-6" id="projects-grid">
+    <div class="stagger-grid grid md:grid-cols-2 gap-6" id="projects-grid">
         {projects.map((project) => (
           <a
             href={project.url}
@@ -141,7 +150,6 @@ try {
           </a>
         ))}
       </div>
-    )}
 
     <div class="text-center mt-12">
       <a

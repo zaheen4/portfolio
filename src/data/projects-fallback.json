@@ -1,0 +1,38 @@
+[
+  {
+    "name": "mediflow-platform",
+    "description": "Full-stack medical equipment e-commerce platform with React, Express, and MySQL. Features user auth, shopping cart, order management, and admin inventory dashboard.",
+    "language": "JavaScript",
+    "stars": 1,
+    "forks": 0,
+    "url": "https://github.com/zaheen4/mediflow-platform",
+    "color": "#f1e05a"
+  },
+  {
+    "name": "vocab-vault",
+    "description": "Smart vocabulary flashcard web platform — React + Express with Leitner spaced repetition, quizzes, XP and streaks",
+    "language": "JavaScript",
+    "stars": 0,
+    "forks": 0,
+    "url": "https://github.com/zaheen4/vocab-vault",
+    "color": "#f1e05a"
+  },
+  {
+    "name": "routine-to-gsheet",
+    "description": "An automation script to scrape class routine and organize it in a Google Sheet.",
+    "language": "Python",
+    "stars": 1,
+    "forks": 0,
+    "url": "https://github.com/zaheen4/routine-to-gsheet",
+    "color": "#3572A5"
+  },
+  {
+    "name": "omarchy-wordmark-kit",
+    "description": "Render any word in the Omarchy wordmark style for Plymouth boot themes and the screensaver",
+    "language": "Shell",
+    "stars": 0,
+    "forks": 0,
+    "url": "https://github.com/zaheen4/omarchy-wordmark-kit",
+    "color": "#89e051"
+  }
+]
