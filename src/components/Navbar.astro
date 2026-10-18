@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import ThemePicker from "./ThemePicker.jsx";
+import ThemePicker from "./ThemePicker.astro";
 ---
 
 <nav
@@ -32,11 +32,11 @@ import ThemePicker from "./ThemePicker.jsx";
                     class="hover:text-accent transition-colors duration-200"
                     style="color: var(--text-secondary);">Contact</a
                 >
-                <ThemePicker client:idle />
+                <ThemePicker />
             </div>
 
             <div class="flex items-center gap-2 md:hidden">
-                <ThemePicker client:idle />
+                <ThemePicker />
                 <button
                     id="mobile-menu-btn"
                     aria-label="Toggle menu"
