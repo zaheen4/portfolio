@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon/components';
+import { Icon } from 'astro-icon/components'
 
 const rows = [
   [
@@ -20,45 +20,61 @@ const rows = [
     { name: 'Git', icon: 'simple-icons:git', color: '#F05032' },
     { name: 'MySQL', icon: 'simple-icons:mysql', color: '#4479A1' },
   ],
-];
+]
 ---
 
-<section id="skills" aria-labelledby="skills-heading" class="py-24 px-4" style="background-color: var(--bg-secondary);">
+<section
+  id="skills"
+  aria-labelledby="skills-heading"
+  class="py-24 px-4"
+  style="background-color: var(--bg-secondary)"
+>
   <div class="max-w-6xl mx-auto">
     <div class="section-reveal text-center mb-16">
       <h2 id="skills-heading" class="text-3xl sm:text-4xl font-bold mb-1">
         My <span class="gradient-text">Skills</span>
       </h2>
       <div class="section-underline mb-4"></div>
-      <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary);">
+      <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
         Technologies and tools I work with to bring ideas to life
       </p>
     </div>
 
     <div class="flex flex-col items-center gap-8" id="skills-rows">
-      {rows.map((row, ri) => (
-        <div class="w-full flex flex-col items-center gap-4">
-          {ri > 0 && (
-            <div class="row-divider w-1/2 h-px" style="background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 25%, transparent), transparent);"></div>
-          )}
-          <div class="stagger-grid flex flex-wrap justify-center gap-5">
-            {row.map((skill, si) => (
-              <div
-                class="skill-chip"
-                style={`
+      {rows.map((row, ri) => <div class="w-full flex flex-col items-center gap-4">
+        {ri > 0 && (
+          <div
+            class="row-divider w-1/2 h-px"
+            style="
+              background: linear-gradient(
+                90deg,
+                transparent,
+                color-mix(in srgb, var(--accent) 25%, transparent),
+                transparent
+              );
+            "
+          ></div>
+        )}
+        <div class="stagger-grid flex flex-wrap justify-center gap-5">
+          {row.map((skill, si) => <div
+            class="skill-chip"
+            style={`
                   opacity: 0;
                   transform: translateY(20px);
                   --i: ${si};
                   --chip-color: ${skill.color};
                 `}
-              >
-                <Icon name={skill.icon} width="18" height="18" style={`color: ${skill.color}; flex-shrink: 0;`} />
-                <span>{skill.name}</span>
-              </div>
-            ))}
-          </div>
+          >
+            <Icon
+              name={skill.icon}
+              width="18"
+              height="18"
+              style={`color: ${skill.color}; flex-shrink: 0;`}
+            />
+            <span>{skill.name}</span>
+          </div>)}
         </div>
-      ))}
+      </div>)}
     </div>
   </div>
 </section>
@@ -75,7 +91,9 @@ const rows = [
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     cursor: default;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
     font-size: 0.9rem;
     font-weight: 500;
   }
@@ -87,8 +105,13 @@ const rows = [
   }
 
   @keyframes chip-float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
   }
 
   .skill-chip.is-float {
@@ -111,47 +134,50 @@ const rows = [
 
   var container = document.getElementById('skills-rows')
   if (container && 'IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var grids = entry.target.querySelectorAll('.stagger-grid')
-          var rowStart = 0
-          grids.forEach(function (grid, ri) {
-            var chips = grid.querySelectorAll('.skill-chip')
-            var divider = grid.parentElement.querySelector('.row-divider')
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var grids = entry.target.querySelectorAll('.stagger-grid')
+            var rowStart = 0
+            grids.forEach(function (grid, ri) {
+              var chips = grid.querySelectorAll('.skill-chip')
+              var divider = grid.parentElement.querySelector('.row-divider')
 
-            if (divider) {
-              animate(divider, {
-                opacity: [0, 1],
-                scaleX: [0, 1],
-                duration: 400,
-                ease: 'outCubic',
-                delay: rowStart,
-              })
-            }
+              if (divider) {
+                animate(divider, {
+                  opacity: [0, 1],
+                  scaleX: [0, 1],
+                  duration: 400,
+                  ease: 'outCubic',
+                  delay: rowStart,
+                })
+              }
 
-            if (chips.length) {
-              animate(chips, {
-                opacity: [0, 1],
-                translateY: [20, 0],
-                delay: stagger(80, { start: rowStart }),
-                ease: 'outBack',
-                duration: 600,
-                onComplete: function () {
-                  chips.forEach(function (chip) {
-                    chip.style.transform = ''
-                    chip.classList.add('is-float')
-                  })
-                },
-              })
-            }
+              if (chips.length) {
+                animate(chips, {
+                  opacity: [0, 1],
+                  translateY: [20, 0],
+                  delay: stagger(80, { start: rowStart }),
+                  ease: 'outBack',
+                  duration: 600,
+                  onComplete: function () {
+                    chips.forEach(function (chip) {
+                      chip.style.transform = ''
+                      chip.classList.add('is-float')
+                    })
+                  },
+                })
+              }
 
-            rowStart += 250
-          })
-          observer.unobserve(entry.target)
-        }
-      })
-    }, { threshold: 0.2 })
+              rowStart += 250
+            })
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.2 },
+    )
     observer.observe(container)
   }
 </script>
