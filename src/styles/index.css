@@ -25,6 +25,7 @@
 }
 
 :root {
+  color-scheme: light;
   --bg-primary: #faf8f5;
   --bg-secondary: #f5f0eb;
   --bg-card: #ffffff;
@@ -43,6 +44,7 @@
 }
 
 [data-theme='warm-dark'] {
+  color-scheme: dark;
   --bg-primary: #1a1714;
   --bg-secondary: #211e1a;
   --bg-card: #262220;
@@ -61,6 +63,7 @@
 }
 
 [data-theme='warm-light'] {
+  color-scheme: light;
   --bg-primary: #faf8f5;
   --bg-secondary: #f5f0eb;
   --bg-card: #ffffff;
@@ -79,6 +82,7 @@
 }
 
 [data-theme='dracula'] {
+  color-scheme: dark;
   --bg-primary: #282a36;
   --bg-secondary: #2d2f3d;
   --bg-card: #343746;
@@ -97,6 +101,7 @@
 }
 
 [data-theme='nord'] {
+  color-scheme: dark;
   --bg-primary: #2e3440;
   --bg-secondary: #3b4252;
   --bg-card: #434c5e;
@@ -115,6 +120,7 @@
 }
 
 [data-theme='monokai'] {
+  color-scheme: dark;
   --bg-primary: #272822;
   --bg-secondary: #2d2e27;
   --bg-card: #3e3d32;
@@ -133,6 +139,7 @@
 }
 
 [data-theme='tokyo-night'] {
+  color-scheme: dark;
   --bg-primary: #1a1b26;
   --bg-secondary: #1f2335;
   --bg-card: #24283b;
@@ -151,6 +158,7 @@
 }
 
 [data-theme='catppuccin-mocha'] {
+  color-scheme: dark;
   --bg-primary: #1e1e2e;
   --bg-secondary: #232336;
   --bg-card: #313244;
@@ -169,6 +177,7 @@
 }
 
 [data-theme='one-dark'] {
+  color-scheme: dark;
   --bg-primary: #282c34;
   --bg-secondary: #2c313c;
   --bg-card: #353b45;
@@ -187,6 +196,7 @@
 }
 
 [data-theme='github-light'] {
+  color-scheme: light;
   --bg-primary: #ffffff;
   --bg-secondary: #f6f8fa;
   --bg-card: #ffffff;
@@ -205,6 +215,7 @@
 }
 
 [data-theme='solarized-light'] {
+  color-scheme: light;
   --bg-primary: #fdf6e3;
   --bg-secondary: #eee8d5;
   --bg-card: #fdf6e3;
@@ -223,6 +234,7 @@
 }
 
 [data-theme='catppuccin-latte'] {
+  color-scheme: light;
   --bg-primary: #eff1f5;
   --bg-secondary: #e6e9ef;
   --bg-card: #ffffff;

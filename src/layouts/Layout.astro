@@ -12,6 +12,9 @@ const {
   title = 'Mir Zaheen Waseet | Portfolio',
   description = 'Mir Zaheen Waseet - Building tools that automate the boring stuff',
 } = Astro.props
+
+const ogImageAlt =
+  'Mir Zaheen Waseet — portfolio preview card showing his name and GitHub handle zaheen4'
 ---
 
 <!doctype html>
@@ -49,11 +52,19 @@ const {
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://zaheen4.github.io/portfolio/og-image.png" />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    <!-- theme-color is kept in step with the active theme by the inline script
+         below. color-scheme covers the window before the stylesheet applies,
+         so form controls and scrollbars never flash the wrong mode. -->
+    <meta name="theme-color" content="#faf8f5" />
+    <meta name="color-scheme" content="light dark" />
 
     <script type="application/ld+json">
       {
@@ -70,6 +81,20 @@ const {
     </script>
     <script is:inline>
       ;(function () {
+        var meta = document.querySelector('meta[name="theme-color"]')
+
+        // --bg-primary only resolves once the stylesheet is applied, and Astro
+        // emits that link after this script, so read it on the first frame
+        // rather than inline. From then on, follow data-theme wherever it is
+        // written: the picker, the system-preference listener, or startup.
+        function syncThemeColor() {
+          if (!meta) return
+          var bg = getComputedStyle(document.documentElement)
+            .getPropertyValue('--bg-primary')
+            .trim()
+          if (bg) meta.setAttribute('content', bg)
+        }
+
         try {
           var theme = localStorage.getItem('theme') || 'system'
           var resolved = theme
@@ -82,6 +107,13 @@ const {
         } catch (e) {
           document.documentElement.setAttribute('data-theme', 'warm-dark')
         }
+
+        requestAnimationFrame(syncThemeColor)
+        window.addEventListener('load', syncThemeColor)
+        new MutationObserver(syncThemeColor).observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ['data-theme'],
+        })
       })()
     </script>
   </head>

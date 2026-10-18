@@ -8,6 +8,7 @@ const contacts = [
     icon: 'lucide:mail',
     href: 'mailto:zwaseet@gmail.com',
     color: '#ea4335',
+    copyable: true,
   },
   {
     name: 'LinkedIn',
@@ -52,34 +53,49 @@ const contacts = [
     </div>
 
     <div class="flex flex-wrap justify-center gap-4" id="contact-cards">
-      {contacts.map((contact, i) => <a
-        href={contact.href}
-        target={contact.href.startsWith('http') ? '_blank' : undefined}
-        rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-        class="contact-chip"
-        style={`
-            opacity: 0;
-            transform: translateY(20px);
-            --chip-color: ${contact.color};
-            --i: ${i};
-          `}
-      >
-        <Icon
-          name={contact.icon}
-          width="18"
-          height="18"
-          style={`color: ${contact.color}; flex-shrink: 0;`}
-          aria-hidden="true"
-        />
-        <div class="text-left">
-          <div class="text-sm font-medium">
-            {contact.name}
-          </div>
-          <div class="contact-handle">{contact.handle}</div>
+      {contacts.map((contact, i) => {
+        const external = contact.href.startsWith('http')
+        return <div
+          class:list={['contact-chip', contact.copyable && 'has-copy']}
+          style={`
+                opacity: 0;
+                transform: translateY(20px);
+                --chip-color: ${contact.color};
+                --i: ${i};
+              `}
+        >
+          <a
+            href={contact.href}
+            target={external ? '_blank' : undefined}
+            rel={external ? 'noopener noreferrer' : undefined}
+            class="contact-chip-target"
+          >
+            <Icon
+              name={contact.icon}
+              width="18"
+              height="18"
+              style={`color: ${contact.color}; flex-shrink: 0;`}
+              aria-hidden="true"
+            />
+            <div class="text-left">
+              <div class="text-sm font-medium">{contact.name}</div>
+              <div class="contact-handle">{contact.handle}</div>
+            </div>
+            {external && <span class="sr-only">(opens in new tab)</span>}
+          </a>
+          {contact.copyable && <button
+            type="button"
+            class="contact-copy"
+            data-copy={contact.handle}
+            aria-label={`Copy ${contact.name.toLowerCase()} address`}
+          >
+            <Icon name="lucide:copy" width="15" height="15" aria-hidden="true" />
+          </button>}
         </div>
-        {contact.href.startsWith('http') && <span class="sr-only">(opens in new tab)</span>}
-      </a>)}
+      })}
     </div>
+
+    <div class="copy-toast" id="copy-toast" role="status"></div>
   </div>
 </section>
 
@@ -87,17 +103,74 @@ const contacts = [
   .contact-chip {
     position: relative;
     display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.5rem 1.1rem;
+    align-items: stretch;
     border-radius: 999px;
     border: 1px solid var(--bg-border);
     background: color-mix(in srgb, var(--bg-card) 65%, transparent);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    cursor: pointer;
     transition: border-color 0.25s ease;
+  }
+
+  /* The link fills the pill so the whole chip stays clickable, and the copy
+     button sits beside it rather than inside it - a button cannot legally
+     nest in an anchor. */
+  .contact-chip-target {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    color: inherit;
     text-decoration: none;
+    cursor: pointer;
+  }
+
+  .contact-chip.has-copy .contact-chip-target {
+    padding-right: 0.6rem;
+  }
+
+  .contact-copy {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.85rem 0 0.6rem;
+    border: 0;
+    border-left: 1px solid var(--bg-border);
+    border-radius: 0 999px 999px 0;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition:
+      color 0.25s ease,
+      background-color 0.25s ease;
+  }
+
+  .contact-copy:hover {
+    color: var(--chip-color);
+    background: color-mix(in srgb, var(--chip-color) 12%, transparent);
+  }
+
+  .copy-toast {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 5.5rem; /* clears the back-to-top button and the footer line */
+    /* Inline-axis centring rather than a translate, so transform stays free
+       for the show/hide animation. */
+    margin-inline: auto;
+    width: fit-content;
+    max-width: min(92vw, 24rem);
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--bg-border);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: 0 8px 24px var(--glow-shadow);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 60;
   }
 
   .contact-chip::before {
@@ -171,4 +244,82 @@ const contacts = [
     )
     observer.observe(container)
   }
+
+  var toast = document.getElementById('copy-toast')
+  var toastTimer = null
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+  function showToast(message) {
+    if (!toast) return
+    clearTimeout(toastTimer)
+    toast.textContent = message
+
+    if (prefersReduced.matches) {
+      toast.style.opacity = '1'
+      toast.style.transform = ''
+    } else {
+      // Reset to the off state first, so a repeat click replays the fade
+      // instead of flashing.
+      toast.style.opacity = '0'
+      toast.style.transform = 'translateY(12px)'
+      animate(toast, { opacity: 1, translateY: 0, duration: 250, ease: 'outCubic' })
+    }
+
+    toastTimer = setTimeout(hideToast, 2200)
+  }
+
+  function hideToast() {
+    if (!toast) return
+    if (prefersReduced.matches) {
+      toast.style.opacity = '0'
+      toast.style.transform = ''
+      return
+    }
+    animate(toast, {
+      opacity: 0,
+      translateY: 12,
+      duration: 250,
+      ease: 'inCubic',
+      onComplete: function () {
+        toast.style.transform = ''
+      },
+    })
+  }
+
+  function copyText(value) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(value)
+    }
+    // Fallback for anything without the async clipboard API.
+    return new Promise(function (resolve, reject) {
+      try {
+        var field = document.createElement('textarea')
+        field.value = value
+        field.setAttribute('readonly', '')
+        field.style.position = 'fixed'
+        field.style.top = '-1000px'
+        document.body.appendChild(field)
+        field.select()
+        var copied = document.execCommand('copy')
+        document.body.removeChild(field)
+        if (copied) resolve()
+        else reject(new Error('copy blocked'))
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  document.querySelectorAll('.contact-copy').forEach(function (button) {
+    button.addEventListener('click', function () {
+      copyText(button.getAttribute('data-copy')).then(
+        function () {
+          showToast('Email copied to clipboard')
+        },
+        function () {
+          showToast('Could not copy — select it manually')
+        },
+      )
+    })
+  })
 </script>
