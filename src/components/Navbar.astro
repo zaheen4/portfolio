@@ -9,7 +9,7 @@ import ThemePicker from './ThemePicker.astro'
 >
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      <a href="#hero" class="text-2xl font-bold gradient-text">Z</a>
+      <a href="#hero" class="brand text-2xl font-bold gradient-text">Z</a>
 
       <div class="hidden md:flex items-center gap-8">
         <div class="nav-links">
@@ -96,6 +96,8 @@ import ThemePicker from './ThemePicker.astro'
 </nav>
 
 <script>
+  import { animate } from 'animejs'
+
   ;(function () {
     var btn = document.getElementById('mobile-menu-btn')
     var menu = document.getElementById('mobile-menu')
@@ -141,6 +143,8 @@ import ThemePicker from './ThemePicker.astro'
 
     var current = null
     var PAD = 12 // horizontal breathing room inside the capsule
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    var glide = null
 
     function linkFor(id) {
       for (var i = 0; i < links.length; i++) {
@@ -149,8 +153,12 @@ import ThemePicker from './ThemePicker.astro'
       return null
     }
 
-    // Snap when appearing, glide when moving between sections.
+    // Snap when appearing or when motion is unwelcome, glide otherwise.
     function place(link) {
+      if (glide) {
+        glide.cancel()
+        glide = null
+      }
       if (!link) {
         pill.style.opacity = '0'
         pill.style.width = '0'
@@ -158,15 +166,23 @@ import ThemePicker from './ThemePicker.astro'
       }
       var linkRect = link.getBoundingClientRect()
       var baseRect = navLinks.getBoundingClientRect()
-      var appearing = pill.style.opacity !== '1'
-      if (appearing) pill.style.transition = 'none'
-      pill.style.left = linkRect.left - baseRect.left - PAD + 'px'
-      pill.style.width = linkRect.width + PAD * 2 + 'px'
-      pill.style.opacity = '1'
-      if (appearing) {
-        void pill.offsetWidth
-        pill.style.transition = ''
+      var left = linkRect.left - baseRect.left - PAD
+      var width = linkRect.width + PAD * 2
+
+      if (pill.style.opacity !== '1' || prefersReduced.matches) {
+        pill.style.left = left + 'px'
+        pill.style.width = width + 'px'
+        pill.style.opacity = '1'
+        return
       }
+
+      glide = animate(pill, {
+        left: left + 'px',
+        width: width + 'px',
+        opacity: 1,
+        duration: 350,
+        ease: 'outCubic',
+      })
     }
 
     function setActive(id) {

@@ -528,10 +528,6 @@ body {
   background-color: var(--accent-glow);
   opacity: 0;
   pointer-events: none;
-  transition:
-    left 350ms cubic-bezier(0.215, 0.61, 0.355, 1),
-    width 350ms cubic-bezier(0.215, 0.61, 0.355, 1),
-    opacity 200ms ease;
 }
 
 .nav-link {
@@ -559,6 +555,19 @@ body {
   margin-left: -0.875rem;
 }
 
+/* The mark already shifts its gradient continuously, so the hover
+   leans on that rather than adding a second motion. */
+.brand {
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.brand:hover {
+  transform: scale(1.08);
+  filter: brightness(1.15);
+}
+
 .nav-slide-in {
   animation: nav-slide-in 0.5s ease forwards;
 }
@@ -583,7 +592,12 @@ body {
     transform: none;
   }
 
-  .nav-pill {
+  .brand {
     transition: none;
+  }
+
+  /* The mark's gradient loops forever; stop it rather than let it run. */
+  .gradient-text {
+    animation: none;
   }
 }
