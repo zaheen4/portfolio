@@ -220,10 +220,6 @@
   --gradient-end: #40a02b;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 :focus:not(:focus-visible) {
   outline: none;
 }

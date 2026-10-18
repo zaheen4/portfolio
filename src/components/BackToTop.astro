@@ -48,6 +48,8 @@ import { Icon } from 'astro-icon/components'
 
   var btn = document.getElementById('back-to-top')
   if (btn) {
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
     window.addEventListener('scroll', function () {
       btn.classList.toggle('visible', window.scrollY > 300)
     })
@@ -55,6 +57,10 @@ import { Icon } from 'astro-icon/components'
     btn.addEventListener('click', function () {
       var start = window.scrollY
       if (start < 5) return
+      if (prefersReducedMotion.matches) {
+        window.scrollTo(0, 0)
+        return
+      }
       var state = { t: 0 }
       animate(state, {
         t: 1,
