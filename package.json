@@ -16,11 +16,8 @@
     "@iconify-json/lucide": "^1.2.144",
     "@iconify-json/simple-icons": "^1.2.100",
     "animejs": "^4.5.0",
-    "astro": "^6.4.5",
+    "astro": "^7.4.0",
     "astro-icon": "^1.2.0"
-  },
-  "overrides": {
-    "vite": "^7.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
