@@ -4,6 +4,26 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* Tailwind 4 only builds colour utilities from `--color-*` theme tokens.
+   Everything below lives in `:root` and is swapped per [data-theme], so
+   without these aliases utilities like `bg-card` or `text-accent-light`
+   compile to nothing - silently, with no warning.
+
+   `inline` keeps the reference to the runtime variable, so the utilities
+   follow whichever theme is active.
+
+   There is deliberately no `--color-primary` / `--color-secondary`: a
+   single name would have to serve both `--bg-primary` and `--text-primary`,
+   which are different colours here. Reach for `var()` or a component class
+   for those. */
+@theme inline {
+  --color-card: var(--bg-card);
+  --color-border: var(--bg-border);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-muted: var(--text-muted);
+}
+
 :root {
   --bg-primary: #faf8f5;
   --bg-secondary: #f5f0eb;
