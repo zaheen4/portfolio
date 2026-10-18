@@ -6,11 +6,10 @@ Personal portfolio website built with Astro, anime.js, and Tailwind CSS.
 
 ## Tech Stack
 
-- **Astro 6** — Static site generation with optional React islands
+- **Astro 7** — Static site generation, no client framework
 - **anime.js** — Animations (stagger entrances, mask sweep, scramble text, float effects)
 - **Tailwind CSS 4** — Utility-first styling
 - **astro-icon** — Icons (Lucide + Simple Icons sets, zero runtime JS)
-- **React 19** — Only used for the ThemePicker island (`client:idle`)
 
 ## Features
 
@@ -19,8 +18,9 @@ Personal portfolio website built with Astro, anime.js, and Tailwind CSS.
 - **Static Projects** — GitHub repositories fetched at build time, rendered as static HTML cards
 - **Parallax Background** — Amber glow orbs that drift on scroll
 - **Glass Chip Design** — Skills and contact links with specular glow on hover
+- **Copy to Clipboard** — One-click email copying, with a confirmation toast
 - **Responsive** — Works on all screen sizes
-- **SEO** — OG/Twitter meta, canonical, JSON-LD, auto-generated sitemap
+- **SEO** — OG/Twitter meta with image alt text, canonical, JSON-LD, auto-generated sitemap
 
 ## Getting Started
 
