@@ -1,0 +1,22 @@
+version: 2
+updates:
+  # Cron has no true fortnight cadence, so this approximates "every two weeks"
+  # with the 1st and 15th of each month (14 days apart, then 16-17 days).
+  # Times are UTC.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: cron
+      cronjob: '0 9 1,15 * *'
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: cron
+      cronjob: '0 9 1,15 * *'

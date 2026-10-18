@@ -47,8 +47,8 @@
       if (!ticking) {
         window.requestAnimationFrame(function () {
           var y = window.scrollY
-          orb1.style.transform = 'translateY(' + (y * 0.08) + 'px)'
-          orb2.style.transform = 'translateY(' + (y * -0.05) + 'px)'
+          orb1.style.transform = 'translateY(' + y * 0.08 + 'px)'
+          orb2.style.transform = 'translateY(' + y * -0.05 + 'px)'
           ticking = false
         })
         ticking = true

@@ -1,13 +1,25 @@
 ---
-import { Icon } from 'astro-icon/components';
+import { Icon } from 'astro-icon/components'
 ---
 
 <section id="about" aria-labelledby="about-heading" class="py-24 px-4">
   <div class="max-w-6xl mx-auto">
     <div class="section-reveal flex flex-col md:flex-row items-center gap-12">
       <div class="flex-shrink-0 about-image">
-        <div class="w-48 h-48 rounded-full overflow-hidden border-2 glow-card" style="border-color: var(--accent);">
-          <video autoplay muted loop playsinline preload="metadata" width="192" height="192" class="w-full h-full object-cover">
+        <div
+          class="w-48 h-48 rounded-full overflow-hidden border-2 glow-card"
+          style="border-color: var(--accent)"
+        >
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            width="192"
+            height="192"
+            class="w-full h-full object-cover"
+          >
             <source src={`${import.meta.env.BASE_URL}media/about-profile.webm`} type="video/webm" />
             <source src={`${import.meta.env.BASE_URL}media/about-profile.mp4`} type="video/mp4" />
           </video>
@@ -19,14 +31,16 @@ import { Icon } from 'astro-icon/components';
           About <span class="gradient-text">Me</span>
         </h2>
         <div class="section-underline mb-4"></div>
-        <p class="about-text text-lg leading-relaxed mb-6" style="color: var(--text-secondary);">
-          I'm a developer who loves building practical tools and automations.
-          From GUI applications that streamline workflows to web scrapers that
-          fetch data efficiently, I enjoy turning repetitive tasks into elegant
-          solutions. Based in Bangladesh, I'm always exploring new technologies
-          and finding creative ways to solve problems with code.
+        <p class="about-text text-lg leading-relaxed mb-6" style="color: var(--text-secondary)">
+          I'm a developer who loves building practical tools and automations. From GUI applications
+          that streamline workflows to web scrapers that fetch data efficiently, I enjoy turning
+          repetitive tasks into elegant solutions. Based in Bangladesh, I'm always exploring new
+          technologies and finding creative ways to solve problems with code.
         </p>
-        <div class="flex flex-wrap gap-4 justify-center md:justify-start" style="color: var(--text-muted);">
+        <div
+          class="flex flex-wrap gap-4 justify-center md:justify-start"
+          style="color: var(--text-muted)"
+        >
           <div class="about-badge flex items-center gap-2">
             <Icon name="lucide:map-pin" width="18" height="18" style="color: var(--accent);" />
             <span>Bangladesh</span>
@@ -55,52 +69,59 @@ import { Icon } from 'astro-icon/components';
   var about = document.getElementById('about')
   function playAboutVideo() {
     var v = document.querySelector('#about video')
-    if (v && v.paused) v.play().catch(function(){})
+    if (v && v.paused) v.play().catch(function () {})
   }
 
-  document.addEventListener('click', function once() {
-    playAboutVideo()
-  }, { once: true })
+  document.addEventListener(
+    'click',
+    function once() {
+      playAboutVideo()
+    },
+    { once: true },
+  )
 
   if (about && 'IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var image = entry.target.querySelector('.about-image')
-          var text = entry.target.querySelector('.about-text')
-          var badges = entry.target.querySelectorAll('.about-badge')
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var image = entry.target.querySelector('.about-image')
+            var text = entry.target.querySelector('.about-text')
+            var badges = entry.target.querySelectorAll('.about-badge')
 
-          if (image) {
-            animate(image, {
-              opacity: [0, 1],
-              scale: [0.85, 1],
-              duration: 700,
-              ease: 'outBack',
-            })
-          }
-          if (text) {
-            animate(text, {
-              opacity: [0, 1],
-              translateY: [24, 0],
-              duration: 600,
-              ease: 'outCubic',
-              delay: 200,
-            })
-          }
-          if (badges.length) {
-            animate(badges, {
-              opacity: [0, 1],
-              translateY: [12, 0],
-              delay: stagger(120, { start: 400 }),
-              duration: 400,
-              ease: 'outCubic',
-            })
-          }
+            if (image) {
+              animate(image, {
+                opacity: [0, 1],
+                scale: [0.85, 1],
+                duration: 700,
+                ease: 'outBack',
+              })
+            }
+            if (text) {
+              animate(text, {
+                opacity: [0, 1],
+                translateY: [24, 0],
+                duration: 600,
+                ease: 'outCubic',
+                delay: 200,
+              })
+            }
+            if (badges.length) {
+              animate(badges, {
+                opacity: [0, 1],
+                translateY: [12, 0],
+                delay: stagger(120, { start: 400 }),
+                duration: 400,
+                ease: 'outCubic',
+              })
+            }
 
-          observer.unobserve(entry.target)
-        }
-      })
-    }, { threshold: 0.2 })
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.2 },
+    )
     observer.observe(about)
   }
 </script>
