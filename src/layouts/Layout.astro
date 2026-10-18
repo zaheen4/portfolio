@@ -88,13 +88,6 @@ const { title = "Mir Zaheen Waseet | Portfolio", description = "Mir Zaheen Wasee
     <BackToTop />
 
     <script>
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-        var theme = localStorage.getItem('theme') || 'system';
-        if (theme === 'system') {
-          document.documentElement.setAttribute('data-theme', e.matches ? 'warm-dark' : 'warm-light');
-        }
-      });
-
       window.addEventListener('theme-transition-start', function() {
         document.getElementById('theme-overlay').style.opacity = '0.6';
       });
