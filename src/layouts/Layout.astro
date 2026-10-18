@@ -35,7 +35,19 @@ const ogImageAlt =
       ><link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet"
-    /></noscript>
+      />
+      <!-- Without scripting the scroll observer never runs, so the sections
+           would stay at opacity: 0. Astro injects the bundled stylesheet
+           further down the head, so the :root prefix is there to outrank that
+           rule rather than for specificity's own sake. -->
+      <style>
+        :root .section-reveal,
+        :root .stagger-item {
+          opacity: 1;
+          transform: none;
+        }
+      </style></noscript
+    >
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='76' text-anchor='middle' font-size='80' font-family='system-ui' font-weight='bold' fill='%23d97706'>Z</text></svg>"
