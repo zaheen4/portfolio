@@ -489,6 +489,56 @@ body {
   border: none;
 }
 
+/* Desktop nav active indicator */
+.nav-links {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-pill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0;
+  height: 2rem;
+  margin-top: -1rem;
+  border-radius: 9999px;
+  background-color: var(--accent-glow);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    left 350ms cubic-bezier(0.215, 0.61, 0.355, 1),
+    width 350ms cubic-bezier(0.215, 0.61, 0.355, 1),
+    opacity 200ms ease;
+}
+
+.nav-link {
+  position: relative;
+  color: var(--text-secondary);
+}
+
+.nav-link:hover,
+.nav-link[aria-current='location'] {
+  color: var(--text-primary);
+}
+
+.nav-link-mobile {
+  color: var(--text-secondary);
+}
+
+.nav-link-mobile:hover,
+.nav-link-mobile.is-active {
+  color: var(--text-primary);
+}
+
+.nav-link-mobile.is-active {
+  border-left: 2px solid var(--accent);
+  padding-left: 0.75rem;
+  margin-left: -0.875rem;
+}
+
 .nav-slide-in {
   animation: nav-slide-in 0.5s ease forwards;
 }
@@ -511,5 +561,9 @@ body {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .nav-pill {
+    transition: none;
   }
 }
