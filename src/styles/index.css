@@ -4,6 +4,26 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+/* Tailwind 4 only builds colour utilities from `--color-*` theme tokens.
+   Everything below lives in `:root` and is swapped per [data-theme], so
+   without these aliases utilities like `bg-card` or `text-accent-light`
+   compile to nothing - silently, with no warning.
+
+   `inline` keeps the reference to the runtime variable, so the utilities
+   follow whichever theme is active.
+
+   There is deliberately no `--color-primary` / `--color-secondary`: a
+   single name would have to serve both `--bg-primary` and `--text-primary`,
+   which are different colours here. Reach for `var()` or a component class
+   for those. */
+@theme inline {
+  --color-card: var(--bg-card);
+  --color-border: var(--bg-border);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-muted: var(--text-muted);
+}
+
 :root {
   --bg-primary: #faf8f5;
   --bg-secondary: #f5f0eb;
@@ -218,10 +238,6 @@
   --gradient-start: #7287fd;
   --gradient-mid: #ea76cb;
   --gradient-end: #40a02b;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 :focus:not(:focus-visible) {
@@ -493,6 +509,65 @@ body {
   border: none;
 }
 
+/* Desktop nav active indicator */
+.nav-links {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-pill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0;
+  height: 2rem;
+  margin-top: -1rem;
+  border-radius: 9999px;
+  background-color: var(--accent-glow);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-link {
+  position: relative;
+  color: var(--text-secondary);
+}
+
+.nav-link:hover,
+.nav-link[aria-current='location'] {
+  color: var(--text-primary);
+}
+
+.nav-link-mobile {
+  color: var(--text-secondary);
+}
+
+.nav-link-mobile:hover,
+.nav-link-mobile.is-active {
+  color: var(--text-primary);
+}
+
+.nav-link-mobile.is-active {
+  border-left: 2px solid var(--accent);
+  padding-left: 0.75rem;
+  margin-left: -0.875rem;
+}
+
+/* The mark already shifts its gradient continuously, so the hover
+   leans on that rather than adding a second motion. */
+.brand {
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.brand:hover {
+  transform: scale(1.08);
+  filter: brightness(1.15);
+}
+
 .nav-slide-in {
   animation: nav-slide-in 0.5s ease forwards;
 }
@@ -515,5 +590,14 @@ body {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .brand {
+    transition: none;
+  }
+
+  /* The mark's gradient loops forever; stop it rather than let it run. */
+  .gradient-text {
+    animation: none;
   }
 }

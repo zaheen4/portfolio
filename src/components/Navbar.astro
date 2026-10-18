@@ -9,33 +9,33 @@ import ThemePicker from './ThemePicker.astro'
 >
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      <a href="#hero" class="text-2xl font-bold gradient-text">Z</a>
+      <a href="#hero" class="brand text-2xl font-bold gradient-text">Z</a>
 
       <div class="hidden md:flex items-center gap-8">
-        <a
-          href="#about"
-          class="hover:text-accent transition-colors duration-200"
-          style="color: var(--text-secondary)"
-          >About</a
-        >
-        <a
-          href="#skills"
-          class="hover:text-accent transition-colors duration-200"
-          style="color: var(--text-secondary)"
-          >Skills</a
-        >
-        <a
-          href="#projects"
-          class="hover:text-accent transition-colors duration-200"
-          style="color: var(--text-secondary)"
-          >Projects</a
-        >
-        <a
-          href="#contact"
-          class="hover:text-accent transition-colors duration-200"
-          style="color: var(--text-secondary)"
-          >Contact</a
-        >
+        <div class="nav-links">
+          <span class="nav-pill" aria-hidden="true"></span>
+          <a href="#about" class="nav-link transition-colors duration-200" data-nav-section="about"
+            >About</a
+          >
+          <a
+            href="#skills"
+            class="nav-link transition-colors duration-200"
+            data-nav-section="skills"
+            >Skills</a
+          >
+          <a
+            href="#projects"
+            class="nav-link transition-colors duration-200"
+            data-nav-section="projects"
+            >Projects</a
+          >
+          <a
+            href="#contact"
+            class="nav-link transition-colors duration-200"
+            data-nav-section="contact"
+            >Contact</a
+          >
+        </div>
         <ThemePicker />
       </div>
 
@@ -69,26 +69,26 @@ import ThemePicker from './ThemePicker.astro'
     <div class="px-4 py-4 space-y-3">
       <a
         href="#about"
-        class="block hover:text-accent transition-colors duration-200"
-        style="color: var(--text-secondary)"
+        class="nav-link-mobile block transition-colors duration-200"
+        data-nav-section="about"
         >About</a
       >
       <a
         href="#skills"
-        class="block hover:text-accent transition-colors duration-200"
-        style="color: var(--text-secondary)"
+        class="nav-link-mobile block transition-colors duration-200"
+        data-nav-section="skills"
         >Skills</a
       >
       <a
         href="#projects"
-        class="block hover:text-accent transition-colors duration-200"
-        style="color: var(--text-secondary)"
+        class="nav-link-mobile block transition-colors duration-200"
+        data-nav-section="projects"
         >Projects</a
       >
       <a
         href="#contact"
-        class="block hover:text-accent transition-colors duration-200"
-        style="color: var(--text-secondary)"
+        class="nav-link-mobile block transition-colors duration-200"
+        data-nav-section="contact"
         >Contact</a
       >
     </div>
@@ -96,6 +96,8 @@ import ThemePicker from './ThemePicker.astro'
 </nav>
 
 <script>
+  import { animate } from 'animejs'
+
   ;(function () {
     var btn = document.getElementById('mobile-menu-btn')
     var menu = document.getElementById('mobile-menu')
@@ -124,5 +126,135 @@ import ThemePicker from './ThemePicker.astro'
     links.forEach(function (link) {
       link.addEventListener('click', closeMenu)
     })
+  })()
+
+  // Desktop nav: gliding active indicator (scroll-spy)
+  ;(function () {
+    var pill = document.querySelector('.nav-pill')
+    var navLinks = document.querySelector('.nav-links')
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'))
+    var mobileLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link-mobile'))
+    var sections = ['hero', 'about', 'skills', 'projects', 'contact']
+      .map(function (id) {
+        return document.getElementById(id)
+      })
+      .filter(Boolean)
+    if (!pill || !navLinks || !links.length || !sections.length) return
+
+    var current = null
+    var PAD = 12 // horizontal breathing room inside the capsule
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    var glide = null
+
+    function linkFor(id) {
+      for (var i = 0; i < links.length; i++) {
+        if (links[i].getAttribute('data-nav-section') === id) return links[i]
+      }
+      return null
+    }
+
+    // Snap when appearing or when motion is unwelcome, glide otherwise.
+    function place(link) {
+      if (glide) {
+        glide.cancel()
+        glide = null
+      }
+      if (!link) {
+        pill.style.opacity = '0'
+        pill.style.width = '0'
+        return
+      }
+      var linkRect = link.getBoundingClientRect()
+      var baseRect = navLinks.getBoundingClientRect()
+      var left = linkRect.left - baseRect.left - PAD
+      var width = linkRect.width + PAD * 2
+
+      if (pill.style.opacity !== '1' || prefersReduced.matches) {
+        pill.style.left = left + 'px'
+        pill.style.width = width + 'px'
+        pill.style.opacity = '1'
+        return
+      }
+
+      glide = animate(pill, {
+        left: left + 'px',
+        width: width + 'px',
+        opacity: 1,
+        duration: 350,
+        ease: 'outCubic',
+      })
+    }
+
+    function setActive(id) {
+      if (id === current) return
+      current = id
+      var active = null
+      links.forEach(function (link) {
+        var on = link.getAttribute('data-nav-section') === id
+        if (on) {
+          link.setAttribute('aria-current', 'location')
+          active = link
+        } else {
+          link.removeAttribute('aria-current')
+        }
+      })
+      mobileLinks.forEach(function (link) {
+        link.classList.toggle('is-active', link.getAttribute('data-nav-section') === id)
+      })
+      place(active)
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) setActive(entry.target.id)
+        })
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    sections.forEach(function (section) {
+      observer.observe(section)
+    })
+
+    // "Contact" is short and may never cross the middle band; force it at the page end.
+    var ticking = false
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (ticking) return
+        ticking = true
+        requestAnimationFrame(function () {
+          ticking = false
+          var doc = document.documentElement
+          if (window.innerHeight + window.scrollY >= doc.scrollHeight - 2) setActive('contact')
+        })
+      },
+      { passive: true },
+    )
+
+    links.forEach(function (link) {
+      // Move immediately: the scroll animation takes ~600ms.
+      link.addEventListener('click', function () {
+        setActive(link.getAttribute('data-nav-section'))
+      })
+      link.addEventListener('pointerenter', function () {
+        place(link)
+      })
+    })
+
+    navLinks.addEventListener('pointerleave', function () {
+      place(linkFor(current))
+    })
+
+    window.addEventListener('resize', function () {
+      place(linkFor(current))
+    })
+
+    // Layout can shift without a window resize - a webfont swapping in is
+    // the usual culprit, and it changes how wide each label renders.
+    // Re-place whenever the track itself changes size.
+    new ResizeObserver(function () {
+      place(linkFor(current))
+    }).observe(navLinks)
   })()
 </script>
