@@ -1,0 +1,10 @@
+# Commits that consist purely of formatting changes, so that `git blame`
+# attributes lines to the commit that actually wrote them.
+#
+# GitHub honours this file automatically. To make `git blame` respect it
+# locally, run once per clone:
+#
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# Prettier: initial repo-wide formatting.
+cc057b4d43e1dcafd3e298abfed3dd2e6c023325
