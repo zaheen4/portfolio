@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zaheen4.github.io/portfolio/sitemap-index.xml
