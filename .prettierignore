@@ -1,0 +1,10 @@
+# Build output and dependencies
+dist
+.astro
+node_modules
+
+# Static assets (og-image.svg is hand-maintained source, not formatted)
+public/
+
+# Generated
+package-lock.json
