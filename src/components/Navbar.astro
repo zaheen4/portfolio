@@ -249,5 +249,12 @@ import ThemePicker from './ThemePicker.astro'
     window.addEventListener('resize', function () {
       place(linkFor(current))
     })
+
+    // Layout can shift without a window resize - a webfont swapping in is
+    // the usual culprit, and it changes how wide each label renders.
+    // Re-place whenever the track itself changes size.
+    new ResizeObserver(function () {
+      place(linkFor(current))
+    }).observe(navLinks)
   })()
 </script>
