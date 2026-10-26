@@ -1,5 +1,14 @@
 [
   {
+    "name": "academic-routine",
+    "description": "Autonomous academic timetable engine, RFC 5545 iCalendar synchronizer, official attendance auditor, and multi-user Telegram assistant.",
+    "language": "Rust",
+    "stars": 0,
+    "forks": 0,
+    "url": "https://github.com/zaheen4/academic-routine",
+    "color": "#dea584"
+  },
+  {
     "name": "mediflow-platform",
     "description": "Full-stack medical equipment e-commerce platform with React, Express, and MySQL. Features user auth, shopping cart, order management, and admin inventory dashboard.",
     "language": "JavaScript",
@@ -25,14 +34,5 @@
     "forks": 0,
     "url": "https://github.com/zaheen4/routine-to-gsheet",
     "color": "#3572A5"
-  },
-  {
-    "name": "omarchy-wordmark-kit",
-    "description": "Render any word in the Omarchy wordmark style for Plymouth boot themes and the screensaver",
-    "language": "Shell",
-    "stars": 0,
-    "forks": 0,
-    "url": "https://github.com/zaheen4/omarchy-wordmark-kit",
-    "color": "#89e051"
   }
 ]
