@@ -11,7 +11,7 @@ import ThemePicker from './ThemePicker.astro'
     <div class="flex items-center justify-between h-16">
       <a href="#hero" class="brand text-2xl font-bold gradient-text">Z</a>
 
-      <div class="hidden md:flex items-center gap-8">
+      <div class="hidden md:flex items-center gap-6">
         <div class="nav-links">
           <span class="nav-pill" aria-hidden="true"></span>
           <a href="#about" class="nav-link transition-colors duration-200" data-nav-section="about"
@@ -36,10 +36,30 @@ import ThemePicker from './ThemePicker.astro'
             >Contact</a
           >
         </div>
+        <a
+          href={`${import.meta.env.BASE_URL}Mir_Zaheen_Waseet_CV.pdf`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3 py-1.5 border border-border rounded-lg text-sm font-medium transition-colors duration-200 inline-flex items-center gap-1.5 hover:border-accent hover:text-accent"
+          aria-label="View CV (opens in new tab)"
+        >
+          <Icon name="lucide:file-text" width="15" height="15" style="color: var(--accent)" />
+          <span>CV</span>
+        </a>
         <ThemePicker />
       </div>
 
       <div class="flex items-center gap-2 md:hidden">
+        <a
+          href={`${import.meta.env.BASE_URL}Mir_Zaheen_Waseet_CV.pdf`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-2.5 py-1 border border-border rounded-lg text-xs font-medium transition-colors duration-200 inline-flex items-center gap-1 hover:border-accent hover:text-accent"
+          aria-label="View CV (opens in new tab)"
+        >
+          <Icon name="lucide:file-text" width="13" height="13" style="color: var(--accent)" />
+          <span>CV</span>
+        </a>
         <ThemePicker />
         <button
           id="mobile-menu-btn"
@@ -91,6 +111,15 @@ import ThemePicker from './ThemePicker.astro'
         data-nav-section="contact"
         >Contact</a
       >
+      <a
+        href={`${import.meta.env.BASE_URL}Mir_Zaheen_Waseet_CV.pdf`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-2 pt-3 mt-1 border-t border-border text-sm font-medium transition-colors duration-200 hover:text-accent"
+      >
+        <Icon name="lucide:file-text" width="16" height="16" style="color: var(--accent)" />
+        <span>View CV (PDF)</span>
+      </a>
     </div>
   </div>
 </nav>
