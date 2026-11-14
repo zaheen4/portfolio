@@ -16,7 +16,7 @@
     "@iconify-json/lucide": "^1.2.149",
     "@iconify-json/simple-icons": "^1.2.101",
     "animejs": "^4.5.0",
-    "astro": "^7.4.4",
+    "astro": "^7.4.7",
     "astro-icon": "^1.2.0"
   },
   "devDependencies": {
